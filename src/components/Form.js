@@ -7,7 +7,8 @@ export const Form = () => {
 
   const handlerSubmit = (event) => {
     event.preventDefault();
-    if (value.length) {
+
+    if (value.trim().length) {
       show(`${value}`, 'success');
       setValue('');
     } else {
