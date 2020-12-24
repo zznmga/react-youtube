@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Alert } from '../components/Alert';
 import { Form } from '../components/Form';
 import { Notes } from '../components/Notes';
+import { Loader } from '../components/Loader';
+import { NotesContext } from '../context/notes/notesContext';
 
 export const Home = () => {
-  const notes = new Array(3)
-    .fill('')
-    .map((_, i) => ({ id: i, title: `Item ${i + 1}` }));
-
+  const { loader } = useContext(NotesContext);
   return (
     <div className={'container'}>
       <Alert />
       <Form />
       <hr />
-      <Notes notes={notes} />
+      {loader && <Loader />}
+      <Notes />
     </div>
   );
 };
