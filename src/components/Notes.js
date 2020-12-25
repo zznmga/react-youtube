@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NotesContext } from '../context/notes/notesContext';
 
-export const Notes = ({ notes }) => {
+export const Notes = () => {
+  const { notes, rmNote } = useContext(NotesContext);
   return (
     <ul className="list-group">
       {notes.map((note) => (
@@ -9,7 +11,11 @@ export const Notes = ({ notes }) => {
             <strong>{note.title}</strong>
             <small>{new Date().toLocaleDateString()}</small>
           </div>
-          <button type="button" className="btn btn-outline-danger btn-sm">
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => rmNote(note.id)}
+          >
             &times;
           </button>
         </li>

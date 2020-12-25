@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Alert } from '../components/Alert';
-import { Form } from '../components/Form';
+//import { Form } from '../components/Form';
 import { Notes } from '../components/Notes';
+import { Loader } from '../components/Loader';
+import { NotesContext } from '../context/notes/notesContext';
+
+const Form = React.lazy(
+  () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(import('../components/Form'));
+      }, 5000);
+    })
+);
 
 export const Home = () => {
-  const notes = new Array(3)
-    .fill('')
-    .map((_, i) => ({ id: i, title: `Item ${i + 1}` }));
-
+  const { loader } = useContext(NotesContext);
   return (
     <div className={'container'}>
       <Alert />
-      <Form />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Form />
+      </Suspense>
+
       <hr />
-      <Notes notes={notes} />
+      {loader && <Loader />}
+      <Notes />
     </div>
   );
 };

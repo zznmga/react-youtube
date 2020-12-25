@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { AlertContext } from '../context/alert/AlertContext';
+import { NotesContext } from '../context/notes/notesContext';
 
-export const Form = () => {
+function Form() {
   const [value, setValue] = useState('');
   const { alert, hide, show } = useContext(AlertContext);
+  const { addNote } = useContext(NotesContext);
 
   const handlerSubmit = (event) => {
     event.preventDefault();
 
     if (value.trim().length) {
+      addNote(value.trim());
       show(`${value}`, 'success');
       setValue('');
     } else {
@@ -29,4 +32,6 @@ export const Form = () => {
       </div>
     </form>
   );
-};
+}
+
+export default Form;
